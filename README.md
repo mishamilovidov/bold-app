@@ -22,7 +22,7 @@
 
 #### PROD DEPLOYMENT ####
 * connect to EC2 instance
-    * ```ssh -i boldapp.pem ec2-user@ec2-50-112-20-3.us-west-2.compute.amazonaws.com```
+    * ```ssh -i boldapp.pem ec2-user@ec2-34-211-255-116.us-west-2.compute.amazonaws.com```
 * run session as root user
     * ```sudo su -```
 * activate virtual environment

@@ -25,7 +25,10 @@ SECRET_KEY = 'hsypc_y=88z$wdyh(l$ujb83jd!crnk9w39@#(54+lue=ec92*'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 ADMIN_ENABLED = DEBUG
-ALLOWED_HOSTS = ['boldapp.us-west-2.elasticbeanstalk.com']
+ALLOWED_HOSTS = [
+    'boldapp.us-west-2.elasticbeanstalk.com',
+    'boldapp.zanzaye.com',
+]
 
 
 # Application definition
