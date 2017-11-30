@@ -1,0 +1,89 @@
+.pathnav{
+    max-height:200px;
+    overflow-y: auto;
+}
+
+.login-page{
+    background-color: #1f1f1f !important;
+}
+
+.table>tbody>tr.budget>td, .table>tbody>tr.budget>th, .table>tbody>tr>td.budget, .table>tbody>tr>th.budget, .table>tfoot>tr.budget>td, .table>tfoot>tr.budget>th, .table>tfoot>tr>td.budget, .table>tfoot>tr>th.budget, .table>thead>tr.budget>td, .table>thead>tr.budget>th, .table>thead>tr>td.budget, .table>thead>tr>th.budget {
+    background-color: #1f1f1f;
+    color:#ffffff;
+}
+
+.table>tbody>tr.summary>td, .table>tbody>tr.summary>th, .table>tbody>tr>td.summary, .table>tbody>tr>th.summary, .table>tfoot>tr.summary>td, .table>tfoot>tr.summary>th, .table>tfoot>tr>td.summary, .table>tfoot>tr>th.summary, .table>thead>tr.summary>td, .table>thead>tr.summary>th, .table>thead>tr>td.summary, .table>thead>tr>th.summary {
+    border-top:solid 3px #1f1f1f !important;
+    font-weight:bold;
+}
+
+.table>tbody>tr.totalbudget>td, .table>tbody>tr.totalbudget>th, .table>tbody>tr>td.totalbudget, .table>tbody>tr>th.totalbudget, .table>tfoot>tr.totalbudget>td, .table>tfoot>tr.totalbudget>th, .table>tfoot>tr>td.totalbudget, .table>tfoot>tr>th.totalbudget, .table>thead>tr.totalbudget>td, .table>thead>tr.totalbudget>th, .table>thead>tr>td.totalbudget, .table>thead>tr>th.totalbudget {
+    background-color: #f6f6f6;
+    font-size: 20px;
+}
+
+.password-box {
+    width: 500px !important;
+    margin: 1% auto !important;
+}
+
+@media (max-width: 767px) {
+
+    .bootstrap-select.btn-group .dropdown-menu{
+        max-width: 100%;
+    }
+    .content-wrapper{
+        padding-top: 50px;
+    }
+    .bootstrap-select{
+        max-width: 220px;
+    }
+    .main-sidebar{
+        padding-top: 100px;
+    }
+}
+@media (max-width: 381px){
+    .main-sidebar{
+        padding-top: 150px;
+    }
+    .navbar-text{
+
+    }
+}
+
+
+.bootstrap-select{
+    margin-top: 8px;
+}
+
+#quickbooks{
+    background: url('../img/quickbooks.png') no-repeat;
+}
+
+#quickbooks:hover{
+   background: url('../img/quickbooks_hover.png') no-repeat;
+}
+
+@media (max-width: 261px){
+    .content-wrapper{
+        padding-top: 100px;
+    }
+    .main-sidebar{
+        padding-top: 200px;
+    }
+}
+
+.datepicker table tr td.disabled, .datepicker table tr td.disabled:hover {
+    text-decoration: line-through;
+}
+
+.signature-pad {
+  /*position: relative;*/
+  left: 0;
+  top: 0;
+    /*width:100%;*/
+  /*width:600px;*/
+  /*height:300px;*/
+   /*border: 15px;*/
+    border-style: ridge;
+}
