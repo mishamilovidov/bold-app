@@ -59,13 +59,17 @@ def prediction(request):
 
 def experiment(request):
 
+    facebook = request.GET.get('facebook', None)
+    pinterest = request.GET.get('pinterest', None)
+    pandora = request.GET.get('pandora', None)
+    espn = request.GET.get('espn', None)
+    linkedin = request.GET.get('linkedin', None)
 
-
-    facebook
-    pintrest
-    pandora
-    espn
-    linkedin
+    facebook = str(facebook)
+    pintrest = str(pinterest)
+    pandora = str(pandora)
+    espn = str(espn)
+    linkedin = str(linkedin)
     test = "1"
 
     data = {
@@ -78,8 +82,8 @@ def experiment(request):
                                     "wwffree", "pinterest", "pandora", "espn", "linkedin", "twitter", "netflix",
                                     "groupon", "newyorktimes", "gender", "carrier"],
                     "Values": [
-                        ["0", "0", "0", "0", "0", "0", "0", "0", test, test, "0", "0", "0", "0", "0", "0", "value"],
-                        ["0", "0", "0", "0", "0", "0", "0", "0", test, test, "0", "0", "0", "0", "0", "0", "value"], ]
+                        ["0", facebook, "0", "0", "0", "0", "0", pinterest, pandora, espn, linkedin, "0", "0", "0", "0", "0", "value"],
+                        ["0", facebook, "0", "0", "0", "0", "0", pinterest, pandora, espn, linkedin, "0", "0", "0", "0", "0", "value"], ]
                 }, },
         "GlobalParameters": {
         }
@@ -92,7 +96,7 @@ def experiment(request):
     headers = {'Content-Type': 'application/json', 'Authorization': ('Bearer ' + api_key)}
 
     req = urllib2.Request(url, body, headers)
-
+    testresult = 0
     try:
         response = urllib2.urlopen(req)
 
@@ -104,7 +108,7 @@ def experiment(request):
 
         result = response.read()
         testresult = json.loads(result)
-        print(testresult['Results']['output1']['value']['Values'][0][7])
+        output = testresult['Results']['output1']['value']['Values'][0][7]
     except urllib2.HTTPError, error:
         print("The request failed with status code: " + str(error.code))
 
@@ -112,5 +116,7 @@ def experiment(request):
         print(error.info())
 
         print(json.loads(error.read()))
-    return HttpResponseRedirect('/prediction/')
+
+
+    return JsonResponse({'result': output})
 

@@ -1,4 +1,5 @@
 {% extends "main.html" %}
+{% load static %}
 {% block pageheader %}
    Prediction Calculator
 {% endblock %}
@@ -9,15 +10,15 @@
 {% block content %}
     <div class="box">
         <div class="box-header">
+            <h2>Gender prediction by applications installed.</h2>
 
+            <h4>Select the applications currently installed on your smartphone.</h4>
         </div>
         <div class="box-body">
 
 
-    <div class="col-lg-12">
-            <h2>This is where the prediction stuff goes</h2>
+    <div class="col-lg-6">
 
-            <h4>Lets hope andrew figured out something cool to do. </h4>
             {% load widget_tweaks %}
             {% for field in genderform %}
                 <div class="form-group">
@@ -35,9 +36,15 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <a href="/experiment/"> <button class="btn btn-warning col-md-2" value="">Experiment</button></a>
+            <button class="btn btn-warning col-md-2" value="" onclick="getPrediction()">Predict</button>
 
     </div>
+
+        <div class="col-lg-6">
+            <h4>Prediction Results: <span id="results"></span></h4>
+
+
+        </div>
     </div>
      </div>
 {% endblock %}
@@ -48,16 +55,56 @@
 
     <script type="text/javascript">
 
+
+    var Globals = {
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+
+    };
+
     function getPrediction()
         {
+
             // $loading = $('.fixed-table-loading');
             // $loading.html('<div style="background-color: #ffffff"><h2><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></h2>Loading Items, please wait..</div>');
             // $loading.show();
             //var utl = (?P<projectid>\d+)/project/paymentapp/(?P<itemid>\d+)/paymentappitems/
-            var url = '/invoicevaluestm/get/';
-            var data = { paymentappid : Globals.paymentappid, csrfmiddlewaretoken:Globals.csrfmiddlewaretoken, item : lineitem};
-            GetData('POST',url,data,DrawPaymentValuesReturnTM);
+            var facebook = 0;
+            var pinterest = 0;
+            var linkedin = 0;
+            var pandora = 0;
+            var espn = 0;
+
+
+            if($("#id_facebook").is(':checked')){
+                facebook = 1;
+            }
+            if($("#id_pinterest").is(':checked')){
+                pinterest = 1;
+            }
+            if($("#id_linkedin").is(':checked')){
+                linkedin = 1;
+            }
+            if($("#id_pandora").is(':checked')){
+                pandora = 1;
+            }
+            if($("#id_espn").is(':checked')){
+                espn = 1;
+            }
+
+
+
+
+            var url = '/experiment/';
+            var data = { csrfmiddlewaretoken:Globals.csrfmiddlewaretoken, facebook : facebook, pinterest : pinterest, linkedin : linkedin, pandora : pandora, espn : espn};
+            GetData('GET',url,data,predictionReturn);
         }
+
+
+    function predictionReturn(data){
+        var result = data.result;
+        $('#results').text(result);
+        
+    }
 
 
     </script>
