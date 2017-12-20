@@ -2,7 +2,7 @@ function GetData(method,url,userdata,successmethod)
 {
     $.ajax({
             method: method,
-            url: url,
+            url: $(url).text(),
             data:userdata,
             success: successmethod,
             error: function (data) {
