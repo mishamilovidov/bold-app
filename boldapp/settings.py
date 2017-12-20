@@ -26,7 +26,8 @@ SECRET_KEY = 'hsypc_y=88z$wdyh(l$ujb83jd!crnk9w39@#(54+lue=ec92*'
 DEBUG = True
 ADMIN_ENABLED = DEBUG
 ALLOWED_HOSTS = [
-    'ffa4d31d893241718bbed49942bba403.vfs.cloud9.us-west-2.amazonaws.com',    
+    'ffa4d31d893241718bbed49942bba403.vfs.cloud9.us-west-2.amazonaws.com',
+    'localhost' 
 ]
 
 DJANGO_SETTINGS_MODULE="boldapp.settings"
