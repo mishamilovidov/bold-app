@@ -1,11 +1,6 @@
 
     <ul class="sidebar-menu">
             <li{% if '/' == request.path %} class="active" {% endif %}><a href="/"><i class="fa fa-home"></i> <span>Home Page</span></a></li>
-            <li{% if '/equipment/' in request.path %} class="active" {% endif %}><a href="/equipment/"><i class="fa fa-laptop"></i> <span>Equipment</span></a></li>
-            <li{% if '/users/' in request.path %} class="active" {% endif %}><a href="/users/"><i class="fa fa-user-o"></i> <span>Users</span></a></li>
-            <li{% if '/departments/' in request.path %} class="active" {% endif %}><a href="/departments/"><i class="fa fa-building-o"></i> <span>Departments</span></a></li>
-            <li{% if '/manufacturers/' in request.path %} class="active" {% endif %}><a href="/manufacturers/"><i class="fa fa-industry"></i> <span>Manufacturers</span></a></li>
-
-
-
+            <li{% if '/prediction/' in request.path %} class="active" {% endif %}><a href="/prediction/"><i class="fa fa-flask"></i> <span>Prediction</span></a></li>
+            <li{% if '/tableau/' in request.path %} class="active" {% endif %}><a href="/tableau/"><i class="fa fa-bar-chart"></i> <span>Tableau</span></a></li>
           </ul>

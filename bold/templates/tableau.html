@@ -1,0 +1,158 @@
+{% extends "main.html" %}
+{% block pageheader %}
+  Tableau
+{% endblock %}
+{% block styleblock %}
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script type="text/javascript" src="http://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+        <script type="text/javascript">
+
+{#        $vizbody = $('#vizbody');#}
+
+     var viz, workbook, activeSheet;
+
+            function initViz() {
+                var containerDiv = document.getElementById("vizContainer"),
+                url = "https://public.tableau.com/views/Appeatingpreferences/Sheet1?:embed=y&:display_count=yes&publish=yes";
+                var options = {
+
+                    hideTabs: true,
+                    hideToolbar: true,
+                    onFirstInteractive: function () {
+                    workbook = viz.getWorkbook();
+                    activeSheet = workbook.getActiveSheet();
+                    }
+                };
+                viz = new tableau.Viz(containerDiv, url, options);
+            }
+
+
+{#            function filterOnValue() {#}
+{#                console.log('in the function');#}
+{#                  activeSheet.applyFilterAsync(#}
+{#                    "Name",#}
+{#                    ["Mcdonald's", "Taco Bell", "Panda Express"],#}
+{##}
+{#                    tableau.FilterUpdateType.REPLACE);#}
+{#                }#}
+
+
+                function filterOnValue() {
+                console.log('here');
+                    var filtervalue = $('#restraunt_select').val();
+                    activeSheet = workbook.getActiveSheet();
+
+                    if (filtervalue !== '#') {
+                        activeSheet.applyFilterAsync(
+                        "Name",
+                        filtervalue,
+                        tableau.FilterUpdateType.REPLACE);
+                    }
+
+                }
+
+                function clearFilters() {
+                  workbook.revertAllAsync();
+                }
+
+
+                function clearSelection() {
+                    workbook.getActiveSheet().clearSelectedMarksAsync();
+                }
+
+
+
+
+
+
+
+
+                function sheetChange() {
+                    if($('#sheet_select').val() === 'restaurants'){
+                        workbook.activateSheetAsync("Sheet 1");
+                        $('#footer').show();
+                    }
+
+
+
+                    else if ($('#sheet_select').val() === 'gender'){
+                          workbook.activateSheetAsync("Sheet 2");
+                          $('#footer').hide();
+                    }
+
+                }
+
+
+
+
+
+    </script>
+
+{% endblock %}
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+
+            <select class="form-control col-md-3" id="sheet_select" onchange="sheetChange()">
+                    <option value="restaurants">Apps and Restaurants</option>
+                    <option value="gender">Apps and Gender</option>
+
+                </select>
+
+        </div>
+        <div class="box-body">
+            <div id="vizbody">
+
+
+
+            <div id="vizContainer"></div>
+
+            </div>
+            <div class="box-footer" id="footer">
+                <hr>
+
+                <div class="col-md-5">
+                <select class="form-control col-md-3" id="restraunt_select">
+                    <option value="#">Select a Restraunt</option>
+                    <option value="Panda Express">Panda Express</option>
+                    <option value="Mountain West Burrito">Mountain West Burrito</option>
+                    <option value="SUBWAY">Subway</option>
+                    <option value="J Dawgs">J Dawgs</option>
+                    <option value="MOA Cafe">MOA Cafe</option>
+                </select>
+                </div>
+                <button class="btn btn-warning col-md-2" onclick="filterOnValue()" value="Filter on Restraunt">Filter on Restraunt</button>
+{#                <input class="btn btn-warning" onclick="clearSelection()" value="Clear">#}
+                <div>
+                    <button class="btn btn-danger" onclick="clearFilters()" value="Clear Selections" style="float: right;">Clear Selections</button>
+                </div>
+            </div>
+
+
+    </div>
+    </div>
+     </div>
+{% endblock %}
+
+{% block scriptblock %}
+
+    <script>
+
+$(document).ready(function() {
+  initViz();
+});
+    </script>
+
+{% endblock %}

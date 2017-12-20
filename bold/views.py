@@ -38,3 +38,15 @@ def logout_user(request):
 def index(request):
     context_dict = {'request': request}
     return render(request, "home.html", context_dict)
+
+
+@login_required(login_url='/login/')
+def tableau(request):
+    context_dict = {'request': request}
+    return render(request, "tableau.html", context_dict)
+
+@login_required(login_url='/login/')
+def prediction(request):
+    context_dict = {'request': request}
+    return render(request, "prediction.html", context_dict)
+
