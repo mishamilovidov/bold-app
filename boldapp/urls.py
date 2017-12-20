@@ -24,6 +24,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^login/', views.login_view, name='login'),
     url(r'^logout/', views.logout_user, name='logout'),
-    url(r'^tableau/', views.tableau, name='logout'),
-    url(r'^prediction/', views.prediction, name='logout'),
+    url(r'^tableau/', views.tableau, name='tableau'),
+    url(r'^prediction/', views.prediction, name='prediction'),
+    url(r'^experiment/', views.experiment, name='experiment'),
 ]

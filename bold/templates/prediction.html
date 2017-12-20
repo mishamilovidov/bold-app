@@ -18,6 +18,24 @@
             <h2>This is where the prediction stuff goes</h2>
 
             <h4>Lets hope andrew figured out something cool to do. </h4>
+            {% load widget_tweaks %}
+            {% for field in genderform %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {% if field|widget_type != 'checkboxinput' %}
+                        {{ field|append_attr:"class:form-control" }}
+                        {{ field.default_error_messages }}
+                        {% else %}
+                            {{ field }}
+                            {{ field.default_error_messages }}
+                    {% endif %}
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <a href="/experiment/"> <button class="btn btn-warning col-md-2" value="">Experiment</button></a>
 
     </div>
     </div>
@@ -25,4 +43,23 @@
 {% endblock %}
 
 {% block scriptblock %}
+
+     <script src="{% static 'js/asynchandler.js' %}"></script>
+
+    <script type="text/javascript">
+
+    function getPrediction()
+        {
+            // $loading = $('.fixed-table-loading');
+            // $loading.html('<div style="background-color: #ffffff"><h2><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></h2>Loading Items, please wait..</div>');
+            // $loading.show();
+            //var utl = (?P<projectid>\d+)/project/paymentapp/(?P<itemid>\d+)/paymentappitems/
+            var url = '/invoicevaluestm/get/';
+            var data = { paymentappid : Globals.paymentappid, csrfmiddlewaretoken:Globals.csrfmiddlewaretoken, item : lineitem};
+            GetData('POST',url,data,DrawPaymentValuesReturnTM);
+        }
+
+
+    </script>
+
 {% endblock %}
