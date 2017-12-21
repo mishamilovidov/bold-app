@@ -7,8 +7,8 @@ from django.contrib.auth import authenticate, login, logout
 # from project3.models import User, Equipment, Department, Manufacturer
 # from project3.forms import UserForm, EquipmentForm, DepartmentForm, ManufacturerForm
 # import urllib2
-# import urllib
-import urllib.request
+# from urllib.request import urlopen, Request
+import urllib3
 import json
 from bold.forms import GenderPredictionForm
 
@@ -97,30 +97,39 @@ def experiment(request):
     api_key = 'qfWmNpQ6lyTFQ1ZLEbRgCaXnXKhXToVkEWDVfmu1NkJsG+xHj0x0yBvbhQxjrqacw7NOMuJUcEgDG7eD2XrjNg=='  # Replace this with the API key for the web service
     headers = {'Content-Type': 'application/json', 'Authorization': ('Bearer ' + api_key)}
 
-    # req = urllib2.Request(url, body, headers)
-    req = urllib.request.Request(url, data, headers)
-    testresult = 0
-    try:
-        # response = urllib2.urlopen(req)
-        response = urllib.request.urlopen(req)
 
-        # If you are using Python 3+, replace urllib2 with urllib.request in the above code:
-        # req = urllib.request.Request(url, body, headers)
-        # response = urllib.request.urlopen(req)
+    # req = urllib.request.Request(url, body, headers)
 
 
 
-        result = response.read()
-        testresult = json.loads(result)
-        output = testresult['Results']['output1']['value']['Values'][0][7]
-    # except urllib2.HTTPError, error:
-    except urllib.error.HTTPError as e:
-        print("The request failed with status code: " + str(error.code))
+    http = urllib3.PoolManager()
 
-        # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
-        print(error.info())
 
-        print(json.loads(error.read()))
+
+    r = http.request('POST', url, body=body, headers=headers)
+
+    testresult = json.loads(r)
+
+    # print(testresult)
+    output = testresult['Results']['output1']['value']['Values'][0][7]
+    # print(output)
+
+
+
+    # testresult = 0
+    # try:
+    #
+    #
+    #     # result = response.read()
+    #
+    # # except urllib2.HTTPError, error:
+    # except urllib.error.HTTPError as e:
+    #     print("The request failed with status code: " + str(error.code))
+    #
+    #     # Print the headers - they include the requert ID and the timestamp, which are useful for debugging the failure
+    #     print(error.info())
+    #
+    #     print(json.loads(error.read()))
 
 
     return JsonResponse({'result': output})
