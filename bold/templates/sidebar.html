@@ -1,6 +1,7 @@
 
     <ul class="sidebar-menu">
             <li{% if '/' == request.path %} class="active" {% endif %}><a href="/"><i class="fa fa-home"></i> <span>Home Page</span></a></li>
+            <li{% if '/matchbox/' in request.path %} class="active" {% endif %}><a href="/matchbox/"><i class="fa fa-flask"></i> <span>Matchbox</span></a></li>
             <li{% if '/prediction/' in request.path %} class="active" {% endif %}><a href="/prediction/"><i class="fa fa-flask"></i> <span>Prediction</span></a></li>
             <li{% if '/tableau/' in request.path %} class="active" {% endif %}><a href="/tableau/"><i class="fa fa-bar-chart"></i> <span>Tableau</span></a></li>
           </ul>

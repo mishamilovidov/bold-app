@@ -1,0 +1,140 @@
+{% extends "main.html" %}
+{% load static %}
+{% block pageheader %}
+   Matchbox Calculator
+{% endblock %}
+{% block breadcrumbs %}
+
+{% endblock %}
+
+{% block content %}
+    <div class="box">
+        <div class="box-header">
+            <h2>Matchbox prediction by applications installed.</h2>
+
+            <h4>Select any applications that have been installed on your smartphone.</h4>
+        </div>
+        <div class="box-body">
+
+
+    <div class="col-lg-6">
+
+            {% load widget_tweaks %}
+            {% for field in genderform %}
+                <div class="form-group">
+                    {{ field.errors }}
+                    {{ field.label_tag }}
+                    {% if field|widget_type != 'checkboxinput' %}
+                        {{ field|append_attr:"class:form-control" }}
+                        {{ field.default_error_messages }}
+                        {% else %}
+                            {{ field }}
+                            {{ field.default_error_messages }}
+                    {% endif %}
+                    {% if field.help_text %}
+                    <p class="help">{{ field.help_text|safe }}</p>
+                    {% endif %}
+                </div>
+            {% endfor %}
+            <button class="btn btn-warning col-md-2" value="" onclick="getPrediction()">Predict</button>
+
+    </div>
+
+        <div class="col-lg-6">
+            <h4>Prediction Results: <span id="results"></span></h4>
+
+
+        </div>
+    </div>
+     </div>
+{% endblock %}
+
+{% block scriptblock %}
+
+     <script src="{% static 'js/asynchandler.js' %}"></script>
+
+    <script type="text/javascript">
+
+
+    var Globals = {
+        csrfmiddlewaretoken: '{{ csrf_token }}'
+
+    };
+
+    function getPrediction()
+        {
+
+            // $loading = $('.fixed-table-loading');
+            // $loading.html('<div style="background-color: #ffffff"><h2><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></h2>Loading Items, please wait..</div>');
+            // $loading.show();
+            //var utl = (?P<projectid>\d+)/project/paymentapp/(?P<itemid>\d+)/paymentappitems/
+            var facebook = 0;
+            var instagram = 0;
+            var drawsomething = 0;
+            var templerun = 0;
+            var clashofclans = 0;
+            var wwffree = 0;
+            var pinterest = 0;
+            var pandora = 0;
+            var zombiefarm = 0;
+
+
+
+
+
+            if($("#id_facebook").is(':checked')){
+                facebook = 1;
+            }
+            if($("#id_instagram").is(':checked')){
+                instagram = 1;
+            }
+            if($("#id_drawsomething").is(':checked')){
+                drawsomething = 1;
+            }
+            if($("#id_templerun").is(':checked')){
+                templerun = 1;
+            }
+            if($("#id_clashofclans").is(':checked')){
+                clashofclans = 1;
+            }
+            if($("#id_wwffree").is(':checked')){
+                wwffree = 1;
+            }
+            if($("#id_pinterest").is(':checked')){
+                pinterest = 1;
+            }
+            if($("#id_pandora").is(':checked')){
+                pandora = 1;
+            }
+            if($("#id_zombiefarm").is(':checked')){
+                zombiefarm = 1;
+            }
+
+
+
+
+            var url = '/matchboxhandler/';
+            var data = {    csrfmiddlewaretoken:Globals.csrfmiddlewaretoken,
+                            facebook : facebook,
+                            instagram : instagram,
+                            drawsomething : drawsomething,
+                            templerun : templerun,
+                            clashofclans : clashofclans,
+                            wwffree:wwffree,
+                            pinterest:pinterest,
+                            pandora:pandora,
+                            zombiefarm:zombiefarm };
+            GetData('GET',url,data,predictionReturn);
+        }
+
+
+    function predictionReturn(data){
+        var result = data.result;
+        $('#results').text(result);
+
+    }
+
+
+    </script>
+
+{% endblock %}

@@ -8,9 +8,11 @@ from django.contrib.auth import authenticate, login, logout
 # from project3.forms import UserForm, EquipmentForm, DepartmentForm, ManufacturerForm
 # import urllib2
 # from urllib.request import urlopen, Request
+import urllib
 import urllib3
 import json
-from bold.forms import GenderPredictionForm
+import codecs
+from bold.forms import GenderPredictionForm, MatchboxForm
 
 from django.contrib import messages
 
@@ -108,11 +110,92 @@ def experiment(request):
 
     r = http.request('POST', url, body=body, headers=headers)
 
-    testresult = json.loads(r.data)
+    # body = r.data.read().decode('utf-8')
 
+    testresult = json.loads(str(r.data))
+
+    # try:
+    #     with open(r.data['Results']['output1']['value']['Values']) as test:
+    #         testresult = json.load(test)
+    # except Exception as e:
+    #     print(e)
     # print(testresult)
     output = testresult['Results']['output1']['value']['Values'][0][7]
     # print(output)
+
+    # print(testresult)
+
+
+
+    return JsonResponse({'result': output})
+
+
+@login_required(login_url='/login/')
+def matchbox(request):
+
+    matchboxform = MatchboxForm()
+
+    context_dict = {'request': request, 'genderform': matchboxform}
+    return render(request, "matchbox.html", context_dict)
+
+
+def matchbox_handler(request):
+
+
+    facebook = request.GET.get('facebook', None)
+    instagram = request.GET.get('instagram', None)
+    drawsomething = request.GET.get('drawsomething', None)
+    templerun = request.GET.get('templerun', None)
+    clashofclans = request.GET.get('clashofclans', None)
+    wwffree = request.GET.get('wwffree', None)
+    pinterest = request.GET.get('pinterest', None)
+    pandora = request.GET.get('pandora', None)
+    zombiefarm = request.GET.get('zombiefarm', None)
+
+    facebook = str(facebook)
+    instagram = str(instagram)
+    drawsomething = str(drawsomething)
+    templerun = str(templerun)
+    clashofclans = str(clashofclans)
+    wwffree = str(wwffree)
+    pinterest = str(pinterest)
+    pandora = str(pandora)
+    zombiefarm = str(zombiefarm)
+
+
+
+    data = {
+
+        "Inputs": {
+
+            "input1":
+                {
+                    "ColumnNames": ["user_id", "facebook", "instagram", "drawsomething", "templerun", "clashofclans",
+                                    "wwffree", "pinterest", "pandora", "zombiefarm"],
+                    "Values": [["0", facebook, instagram, drawsomething, templerun, clashofclans, wwffree, pinterest, pandora, zombiefarm],
+                               ["0", facebook, instagram, drawsomething, templerun, clashofclans, wwffree, pinterest, pandora, zombiefarm], ]
+                }, },
+        "GlobalParameters": {
+        }
+    }
+
+    body = str.encode(json.dumps(data))
+
+    url = 'https://ussouthcentral.services.azureml.net/workspaces/82e21ff375ba4d35800059164b8a2e64/services/222e14fe70d1466f943ad64889827fa0/execute?api-version=2.0&details=true'
+    api_key = 'G0ucwzaDyKli+3s8K3KcHkGSAm4qrAnhIRQK31QCORAhNnazcMtYHou9Evvr7dbzoiejICH4/v2O1rJfLDHVmQ=='  # Replace this with the API key for the web service
+    headers = {'Content-Type': 'application/json', 'Authorization': ('Bearer ' + api_key)}
+
+
+
+    http = urllib3.PoolManager()
+
+    r = http.request('POST', url, body=body, headers=headers)
+
+    testresult = json.loads(r.data)
+
+    print(testresult)
+    output = testresult['Results']['output1']['value']['Values'][0][7]
+    print(output)
 
 
 

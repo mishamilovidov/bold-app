@@ -27,4 +27,6 @@ urlpatterns = [
     url(r'^tableau/', views.tableau, name='tableau'),
     url(r'^prediction/', views.prediction, name='prediction'),
     url(r'^experiment/', views.experiment, name='experiment'),
+    url(r'^matchbox/', views.matchbox, name='matchbox'),
+    url(r'^matchboxhandler/', views.matchbox_handler, name='matchbox_handler'),
 ]
