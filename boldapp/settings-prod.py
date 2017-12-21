@@ -28,6 +28,7 @@ ADMIN_ENABLED = DEBUG
 ALLOWED_HOSTS = [
     'boldapp.us-west-2.elasticbeanstalk.com',
     'boldapp.zanzaye.com',
+    'localhost',
 ]
 
 
