@@ -3,6 +3,14 @@ from django.contrib.auth.models import User
 from django import forms
 
 
+choices = (
+    ('15', 'Brigham Young University Food'), ('29', 'Texas Roadhouse'), ('418', 'BYU Legends Grille'), ('437', 'Brick Oven Provo'), ('516', 'The Wall - BYU'),
+    ('693', 'Papa John\'s Pizza'), ('1365', 'Mountain West Burrito'), ('1401', 'Burgers Supreme'), ('1445', 'Chen\'s Noodle House'), ('374', 'Commons At The Cannon Center'),
+    ('638', 'Panda Express'), ('695', 'NrGize'), ('4816', 'The Awful Waffle')
+)
+
+
+
 
 class GenderPredictionForm(ModelForm):
     facebook = forms.BooleanField(initial=False, required=False)
@@ -17,18 +25,12 @@ class GenderPredictionForm(ModelForm):
 
 
 class MatchboxForm(ModelForm):
-    facebook = forms.BooleanField(initial=False, required=False)
-    instagram = forms.BooleanField(initial=False, required=False)
-    drawsomething = forms.BooleanField(initial=False, required=False, label='Draw Something')
-    templerun = forms.BooleanField(initial=False, required=False, label='Temple Run')
-    clashofclans = forms.BooleanField(initial=False, required=False, label='Clash of Clans')
-    wwffree = forms.BooleanField(initial=False, required=False, label='Words With Friends')
-    pinterest = forms.BooleanField(initial=False, required=False)
-    pandora = forms.BooleanField(initial=False, required=False)
-    zombiefarm = forms.BooleanField(initial=False, required=False, label='Zombie Farm')
+
+    restaurant = forms.ChoiceField(choices=choices, required=False, label='Restaurant')
+    visits = forms.IntegerField(min_value=0, label='Number of visits during the semester:')
 
 
     class Meta:
         model = User
-        fields = ['facebook', 'instagram', 'drawsomething', 'templerun', 'clashofclans', 'wwffree', 'pinterest', 'pandora', 'zombiefarm']
+        fields = ['restaurant', 'visits']
 

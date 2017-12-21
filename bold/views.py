@@ -11,6 +11,7 @@ from django.contrib.auth import authenticate, login, logout
 import urllib
 import urllib3
 import json
+# import requests
 import codecs
 from bold.forms import GenderPredictionForm, MatchboxForm
 
@@ -112,7 +113,7 @@ def experiment(request):
 
     # body = r.data.read().decode('utf-8')
 
-    testresult = json.loads(str(r.data))
+    testresult = json.loads(str(r.data,'utf-8'))
 
     # try:
     #     with open(r.data['Results']['output1']['value']['Values']) as test:
@@ -142,26 +143,13 @@ def matchbox(request):
 def matchbox_handler(request):
 
 
-    facebook = request.GET.get('facebook', None)
-    instagram = request.GET.get('instagram', None)
-    drawsomething = request.GET.get('drawsomething', None)
-    templerun = request.GET.get('templerun', None)
-    clashofclans = request.GET.get('clashofclans', None)
-    wwffree = request.GET.get('wwffree', None)
-    pinterest = request.GET.get('pinterest', None)
-    pandora = request.GET.get('pandora', None)
-    zombiefarm = request.GET.get('zombiefarm', None)
+    name = request.GET.get('name', None)
+    location_id = request.GET.get('location_id', None)
+    visit_count = request.GET.get('visit_count', None)
 
-    facebook = str(facebook)
-    instagram = str(instagram)
-    drawsomething = str(drawsomething)
-    templerun = str(templerun)
-    clashofclans = str(clashofclans)
-    wwffree = str(wwffree)
-    pinterest = str(pinterest)
-    pandora = str(pandora)
-    zombiefarm = str(zombiefarm)
-
+    name = str(name)
+    location_id = str(location_id)
+    visit_count = str(visit_count)
 
 
     data = {
@@ -170,10 +158,8 @@ def matchbox_handler(request):
 
             "input1":
                 {
-                    "ColumnNames": ["user_id", "facebook", "instagram", "drawsomething", "templerun", "clashofclans",
-                                    "wwffree", "pinterest", "pandora", "zombiefarm"],
-                    "Values": [["0", facebook, instagram, drawsomething, templerun, clashofclans, wwffree, pinterest, pandora, zombiefarm],
-                               ["0", facebook, instagram, drawsomething, templerun, clashofclans, wwffree, pinterest, pandora, zombiefarm], ]
+                    "ColumnNames": ["user_id", "name", "location_id", "visit_count", "Visit_count Log"],
+                    "Values": [["23", name, location_id, visit_count, "1"], ["23", name, location_id, visit_count, "1"], ]
                 }, },
         "GlobalParameters": {
         }
@@ -181,20 +167,20 @@ def matchbox_handler(request):
 
     body = str.encode(json.dumps(data))
 
-    url = 'https://ussouthcentral.services.azureml.net/workspaces/82e21ff375ba4d35800059164b8a2e64/services/222e14fe70d1466f943ad64889827fa0/execute?api-version=2.0&details=true'
-    api_key = 'G0ucwzaDyKli+3s8K3KcHkGSAm4qrAnhIRQK31QCORAhNnazcMtYHou9Evvr7dbzoiejICH4/v2O1rJfLDHVmQ=='  # Replace this with the API key for the web service
+    url = 'https://ussouthcentral.services.azureml.net/workspaces/82e21ff375ba4d35800059164b8a2e64/services/1a28707097b4490abe13de2ad77f2d11/execute?api-version=2.0&details=true'
+    api_key = 'YUW+z/LjVrKrH7vik8twENSADBkZ80P9tLnWg7d6cjuWoJtRAiKiviK5upLDDctqlhgT56lc0kvG/+l0SPGYcQ=='  # Replace this with the API key for the web service
     headers = {'Content-Type': 'application/json', 'Authorization': ('Bearer ' + api_key)}
 
-
+    # req = urllib2.Request(url, body, headers)
 
     http = urllib3.PoolManager()
 
     r = http.request('POST', url, body=body, headers=headers)
 
-    testresult = json.loads(str(r.data,‘utf-8’))
+    testresult = json.loads(str(r.data,'utf-8'))
 
     print(testresult)
-    output = testresult['Results']['output1']['value']['Values'][0][7]
+    output = testresult['Results']['output1']['value']['Values']
     print(output)
 
 

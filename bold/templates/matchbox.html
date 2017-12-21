@@ -68,62 +68,24 @@
             // $loading.html('<div style="background-color: #ffffff"><h2><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></h2>Loading Items, please wait..</div>');
             // $loading.show();
             //var utl = (?P<projectid>\d+)/project/paymentapp/(?P<itemid>\d+)/paymentappitems/
-            var facebook = 0;
-            var instagram = 0;
-            var drawsomething = 0;
-            var templerun = 0;
-            var clashofclans = 0;
-            var wwffree = 0;
-            var pinterest = 0;
-            var pandora = 0;
-            var zombiefarm = 0;
 
 
+            var name = 0;
+            var location_id = 0;
+            var visit_count = 0;
 
-
-
-            if($("#id_facebook").is(':checked')){
-                facebook = 1;
-            }
-            if($("#id_instagram").is(':checked')){
-                instagram = 1;
-            }
-            if($("#id_drawsomething").is(':checked')){
-                drawsomething = 1;
-            }
-            if($("#id_templerun").is(':checked')){
-                templerun = 1;
-            }
-            if($("#id_clashofclans").is(':checked')){
-                clashofclans = 1;
-            }
-            if($("#id_wwffree").is(':checked')){
-                wwffree = 1;
-            }
-            if($("#id_pinterest").is(':checked')){
-                pinterest = 1;
-            }
-            if($("#id_pandora").is(':checked')){
-                pandora = 1;
-            }
-            if($("#id_zombiefarm").is(':checked')){
-                zombiefarm = 1;
-            }
+            name = $('#id_restaurant option:selected').text();
+            location_id = $('#id_restaurant').val();
+            visit_count = $('#id_visits').val();
 
 
 
 
             var url = '/matchboxhandler/';
             var data = {    csrfmiddlewaretoken:Globals.csrfmiddlewaretoken,
-                            facebook : facebook,
-                            instagram : instagram,
-                            drawsomething : drawsomething,
-                            templerun : templerun,
-                            clashofclans : clashofclans,
-                            wwffree:wwffree,
-                            pinterest:pinterest,
-                            pandora:pandora,
-                            zombiefarm:zombiefarm };
+                            name : name,
+                            location_id : location_id,
+                            visit_count : visit_count};
             GetData('GET',url,data,predictionReturn);
         }
 
