@@ -191,7 +191,7 @@ def matchbox_handler(request):
 
     r = http.request('POST', url, body=body, headers=headers)
 
-    testresult = json.loads(r.data)
+    testresult = json.loads(str(r.data,‘utf-8’))
 
     print(testresult)
     output = testresult['Results']['output1']['value']['Values'][0][7]
