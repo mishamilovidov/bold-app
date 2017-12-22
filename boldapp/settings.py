@@ -26,11 +26,11 @@ SECRET_KEY = 'hsypc_y=88z$wdyh(l$ujb83jd!crnk9w39@#(54+lue=ec92*'
 DEBUG = True
 ADMIN_ENABLED = DEBUG
 ALLOWED_HOSTS = [
-    'ffa4d31d893241718bbed49942bba403.vfs.cloud9.us-west-2.amazonaws.com',
-    'localhost' 
+    'boldapp.us-west-2.elasticbeanstalk.com',
+    'boldapp.zanzaye.com',
+    'localhost',
 ]
 
-DJANGO_SETTINGS_MODULE="boldapp.settings"
 
 # Application definition
 
@@ -79,9 +79,8 @@ TEMPLATES = [
 ]
 
 
-
-
 WSGI_APPLICATION = 'boldapp.wsgi.application'
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 STATIC_URL = '/static/'
 
 # Database
@@ -89,9 +88,13 @@ STATIC_URL = '/static/'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'mydatabase',
-    }
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': os.environ['RDS_DB_NAME'],
+            'USER': os.environ['RDS_USERNAME'],
+            'PASSWORD': os.environ['RDS_PASSWORD'],
+            'HOST': os.environ['RDS_HOSTNAME'],
+            'PORT': os.environ['RDS_PORT'],
+        }
 }
 
 
@@ -112,6 +115,7 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
