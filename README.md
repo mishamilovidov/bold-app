@@ -31,6 +31,7 @@
     * ```cd bold-app/```
 * if needed, update the python.config; copy and paste new config and save it after running the following command
     * ```sudo rm -r .ebextensions/python.config && >.ebextensions/python.config && sudo nano .ebextensions/python.config```
+* THE FOLLOWING NEEDS TO BE REVISED!!! RUNNING THIS WON'T WORK BECAUSE IT KNOCKS OUT GIT AND EB DEPLOY ONLY DEPLOYS THE HEAD OF THE GIT REPO
 * run the following command
     * ```shopt -s extglob && sudo rm -r * && git clone git@bitbucket.org:parvursus/bold-app.git && cd bold-app/ && mv * ../ && cd ../ && sudo rm -r  bold-app/ && sudo rm -r README.md .gitignore .git/ initialize.py && sudo rm -r boldapp/settings.py && sudo mv boldapp/settings-prod.py boldapp/settings.py && pip install -r requirements.txt```
 * deploy the application with the following command
