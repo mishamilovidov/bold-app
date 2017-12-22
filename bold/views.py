@@ -13,6 +13,7 @@ import urllib3
 import json
 # import requests
 import codecs
+import decimal
 from bold.forms import GenderPredictionForm, MatchboxForm
 
 from django.contrib import messages
@@ -122,13 +123,22 @@ def experiment(request):
     #     print(e)
     # print(testresult)
     output = testresult['Results']['output1']['value']['Values'][0][7]
+
+
+    prediction  = ''
+    output = decimal.Decimal(output)
+    if output >= .5:
+        prediction = 'Male'
+    else:
+        prediction = 'Female'
     # print(output)
+
 
     # print(testresult)
 
 
 
-    return JsonResponse({'result': output})
+    return JsonResponse({'result': prediction})
 
 
 @login_required(login_url='/login/')
@@ -142,24 +152,70 @@ def matchbox(request):
 
 def matchbox_handler(request):
 
-
     name = request.GET.get('name', None)
     location_id = request.GET.get('location_id', None)
     visit_count = request.GET.get('visit_count', None)
 
+
+    facebook = request.GET.get('facebook', None)
+    instagram = request.GET.get('instagram', None)
+    drawsomething = request.GET.get('drawsomething', None)
+    templerun = request.GET.get('templerun', None)
+    clashofclans = request.GET.get('clashofclans', None)
+    wwffree = request.GET.get('wwffree', None)
+    pinterest = request.GET.get('pinterest', None)
+    pandora = request.GET.get('pandora', None)
+    linkedin = request.GET.get('linkedin', None)
+    twitter = request.GET.get('twitter', None)
+    netflix = request.GET.get('netflix', None)
+    groupon = request.GET.get('groupon', None)
+    newyorktimes = request.GET.get('newyorktimes', None)
+    espn = request.GET.get('espn', None)
+    user_id = request.GET.get('user_id', None)
+    gender = request.GET.get('gender', None)
+    carrier = request.GET.get('carrier', None)
+
+
+
+
     name = str(name)
     location_id = str(location_id)
     visit_count = str(visit_count)
-
+    facebook = str(facebook)
+    instagram = str(instagram)
+    drawsomething= str(drawsomething)
+    templerun= str(templerun)
+    clashofclans= str(clashofclans)
+    wwffree= str(wwffree)
+    pinterest= str(pinterest)
+    pandora= str(pandora)
+    linkedin= str(linkedin)
+    twitter= str(twitter)
+    netflix= str(netflix)
+    groupon= str(groupon)
+    newyorktimes= str(newyorktimes)
+    espn= str(espn)
+    user_id= str(user_id)
+    gender= str(gender)
+    carrier= str(carrier)
 
     data = {
 
         "Inputs": {
 
+            "input2":
+                {
+                    "ColumnNames": ["user_id", "facebook", "instagram", "drawsomething", "templerun", "clashofclans",
+                                    "wwffree", "pinterest", "pandora", "espn", "linkedin", "twitter", "netflix",
+                                    "groupon", "newyorktimes", "gender", "carrier"],
+                    "Values": [
+                        [user_id, facebook, instagram, drawsomething, templerun, clashofclans, wwffree, pinterest, pandora, espn, linkedin, twitter, netflix, groupon, newyorktimes, gender, carrier],
+                        ]
+                },
             "input1":
                 {
                     "ColumnNames": ["user_id", "name", "location_id", "visit_count", "Visit_count Log"],
-                    "Values": [["23", name, location_id, visit_count, "1"], ["23", name, location_id, visit_count, "1"], ]
+                    "Values": [[user_id, name, location_id, visit_count, "0"], ]
                 }, },
         "GlobalParameters": {
         }
@@ -167,10 +223,9 @@ def matchbox_handler(request):
 
     body = str.encode(json.dumps(data))
 
-    url = 'https://ussouthcentral.services.azureml.net/workspaces/82e21ff375ba4d35800059164b8a2e64/services/1a28707097b4490abe13de2ad77f2d11/execute?api-version=2.0&details=true'
-    api_key = 'YUW+z/LjVrKrH7vik8twENSADBkZ80P9tLnWg7d6cjuWoJtRAiKiviK5upLDDctqlhgT56lc0kvG/+l0SPGYcQ=='  # Replace this with the API key for the web service
+    url = 'https://ussouthcentral.services.azureml.net/workspaces/82e21ff375ba4d35800059164b8a2e64/services/46942248d9094ef1b3320bcd26de9952/execute?api-version=2.0&details=true'
+    api_key = '1VZd2B/4od8He86jXaZkHjv0JPdxt1FrmrzchxskjP+5bW8tIVnBraTkeXdHCpTnrVz1Hoc0d8/GdHyO7CX5rQ=='  # Replace this with the API key for the web service
     headers = {'Content-Type': 'application/json', 'Authorization': ('Bearer ' + api_key)}
-
     # req = urllib2.Request(url, body, headers)
 
     http = urllib3.PoolManager()
@@ -179,10 +234,21 @@ def matchbox_handler(request):
 
     testresult = json.loads(str(r.data,'utf-8'))
 
-    print(testresult)
-    output = testresult['Results']['output1']['value']['Values']
-    print(output)
+    output1 = testresult['Results']['output1']['value']['Values'][0][1]
+    output2 = testresult['Results']['output1']['value']['Values'][0][2]
+    output3 = testresult['Results']['output1']['value']['Values'][0][3]
 
 
+    output1 = str(output1)
+    output2 = str(output2)
+    output3 = str(output3)
 
-    return JsonResponse({'result': output})
+    if output1 == '4457':
+        output1 = 'Golden Resaurant'
+    if output2 == '516':
+        output2 = 'The Wall'
+    if output3 == '1119':
+        output3 = 'Riverside Country Club'
+
+
+    return JsonResponse({'output1': output1, 'output2': output2, 'output3': output3})

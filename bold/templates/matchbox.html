@@ -17,11 +17,12 @@
         <div class="box-body">
 
 
-    <div class="col-lg-6">
+    <div class="col-lg-12">
+    <br>
 
             {% load widget_tweaks %}
             {% for field in genderform %}
-                <div class="form-group">
+                <div class="form-group col-md-6">
                     {{ field.errors }}
                     {{ field.label_tag }}
                     {% if field|widget_type != 'checkboxinput' %}
@@ -36,12 +37,27 @@
                     {% endif %}
                 </div>
             {% endfor %}
-            <button class="btn btn-warning col-md-2" value="" onclick="getPrediction()">Predict</button>
-
     </div>
+        <div class="box-footer">
+            <div>
+                <button class="btn btn-warning col-md-12" value="" onclick="getPrediction()">Predict</button>
+            </div>
+            <br>
+            <br>
+            <hr>
+            <div class="col-md-12 text-center">
+                <h4>Prediction Result 1: <span id="output1"></span></h4>
+                <h4>Prediction Result 2: <span id="output2"></span></h4>
+                <h4>Prediction Result 3: <span id="output3"></span></h4>
+            </div>
+
+        </div>
+
+
+
 
         <div class="col-lg-6">
-            <h4>Prediction Results: <span id="results"></span></h4>
+
 
 
         </div>
@@ -64,35 +80,128 @@
     function getPrediction()
         {
 
+
             // $loading = $('.fixed-table-loading');
             // $loading.html('<div style="background-color: #ffffff"><h2><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></h2>Loading Items, please wait..</div>');
             // $loading.show();
             //var utl = (?P<projectid>\d+)/project/paymentapp/(?P<itemid>\d+)/paymentappitems/
 
 
-            var name = 0;
-            var location_id = 0;
-            var visit_count = 0;
+            var facebook = 0;
+            var instagram = 0;
+            var drawsomething = 0;
+            var templerun = 0;
+            var clashofclans = 0;
+            var wwffree = 0;
+            var pinterest = 0;
+            var pandora = 0;
+            var linkedin = 0;
+            var twitter = 0;
+            var netflix = 0;
 
-            name = $('#id_restaurant option:selected').text();
-            location_id = $('#id_restaurant').val();
-            visit_count = $('#id_visits').val();
+            var groupon = 0;
+            var newyorktimes = 0;
+            var espn = 0;
+
+
+
+            if($("#id_facebook").is(':checked')){
+                facebook = 1;
+            }
+            if($("#id_instagram").is(':checked')){
+                instagram = 1;
+            }
+            if($("#id_drawsomething").is(':checked')){
+                drawsomething = 1;
+            }
+            if($("#id_templerun").is(':checked')){
+                templerun = 1;
+            }
+            if($("#id_clashofclans").is(':checked')){
+                clashofclans = 1;
+            }
+            if($("#id_wwffree").is(':checked')){
+                wwffree = 1;
+            }
+            if($("#id_pinterest").is(':checked')){
+                pinterest = 1;
+            }
+            if($("#id_pandora").is(':checked')){
+                pandora = 1;
+            }
+            if($("#id_linkedin").is(':checked')){
+                linkedin = 1;
+            }
+            if($("#id_twitter").is(':checked')){
+                twitter = 1;
+            }
+            if($("#id_netflix").is(':checked')){
+                netflix = 1;
+            }
+            if($("#id_groupon").is(':checked')){
+               groupon  = 1;
+            }
+            if($("#id_newyorktimes").is(':checked')){
+                newyorktimes = 1;
+            }
+            if($("#id_espn").is(':checked')){
+                espn = 1;
+            }
+
+
+
+
+             var name = $('#id_restaurant option:selected').text();
+             var location_id = $('#id_restaurant').val();
+             var visit_count = $('#id_visits').val();
+            var user_id = $('#id_user_id').val();
+            var gender = $('#id_gender').val();
+            var carrier = $('#id_carrier').val();
 
 
 
 
             var url = '/matchboxhandler/';
-            var data = {    csrfmiddlewaretoken:Globals.csrfmiddlewaretoken,
-                            name : name,
-                            location_id : location_id,
-                            visit_count : visit_count};
+            var data = {
+                csrfmiddlewaretoken: Globals.csrfmiddlewaretoken,
+                name: name,
+                location_id: location_id,
+                visit_count: visit_count,
+                facebook: facebook,
+                instagram: instagram,
+                drawsomething :drawsomething,
+                templerun :templerun,
+                clashofclans :clashofclans,
+                wwffree :wwffree,
+                pinterest :pinterest,
+                pandora :pandora,
+                linkedin :linkedin,
+                twitter :twitter,
+                netflix :netflix,
+                groupon :groupon,
+                newyorktimes :newyorktimes,
+                espn :espn,
+                user_id: user_id,
+                gender: gender,
+                carrier: carrier
+
+        };
+
+
+
+
             GetData('GET',url,data,predictionReturn);
         }
 
 
     function predictionReturn(data){
-        var result = data.result;
-        $('#results').text(result);
+        var output1 = data.output1;
+        var output2 = data.output2;
+        var output3 = data.output3;
+
+        $('#output1').text(output1);
+        $('#output2').text(output2);
+        $('#output3').text(output3);
 
     }
 
