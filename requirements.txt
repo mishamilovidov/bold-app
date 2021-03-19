@@ -4,7 +4,7 @@ django-role-permissions==2.0.1
 django-tables2==1.6.1
 django-tables2-column-shifter==0.3.0
 django-widget-tweaks==1.4.1
-djangorestframework==3.6.3
+djangorestframework==3.11.2
 psycopg2==2.7.1
 #pysqlite==2.8.3
 #python-dateutil==2.6.0
